@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0a0e16" />
+    <title>Better Pill — 8ステップ Wah シーケンサー</title>
+    <meta
+      name="description"
+      content="Better Pill は、テンポに同期して動く 8 ステップの Wah シーケンサー。STEPS 4/6/8・DAW シンク/タップテンポ・Forward/Random。macOS (AU/VST3) と Windows (VST3) に対応。"
+    />
+    <meta property="og:site_name" content="KOTA2" />
+    <meta property="og:title" content="Better Pill — 8ステップ Wah シーケンサー" />
+    <meta
+      property="og:description"
+      content="テンポに同期して動く 8 ステップの Wah シーケンサー。"
+    />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://kota2-studio.github.io/Better-Pill-releases/"
+    />
+    <meta name="twitter:card" content="summary" />
+    <style>
+      :root {
+        --bg: #0a0e16;
+        --panel: rgba(20, 30, 46, 0.55);
+        --fg: #eef4fb;
+        --muted: #9fb2c9;
+        --cyan: #5ec8ff;
+        --teal: #3ff0d0;
+        --purple: #9b7bff;
+        --line: rgba(94, 200, 255, 0.18);
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; padding: 0; }
+      body {
+        background: var(--bg);
+        color: var(--fg);
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+          "Hiragino Sans", "Noto Sans JP", sans-serif;
+        line-height: 1.7;
+        -webkit-font-smoothing: antialiased;
+        position: relative;
+        overflow-x: hidden;
+      }
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: -2;
+        pointer-events: none;
+        background:
+          radial-gradient(60% 50% at 50% 0%, rgba(94, 200, 255, 0.20), transparent 70%),
+          radial-gradient(50% 40% at 14% 30%, rgba(63, 240, 208, 0.14), transparent 70%),
+          radial-gradient(55% 45% at 86% 34%, rgba(155, 123, 255, 0.18), transparent 70%);
+      }
+      #pulse { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
+      .wrap { max-width: 760px; margin: 0 auto; padding: 0 20px; position: relative; }
+      header { text-align: center; padding: 64px 0 40px; }
+      .logo {
+        font-size: 13px; letter-spacing: 0.42em; text-transform: uppercase;
+        margin: 0 0 18px; font-weight: 700;
+        background: linear-gradient(90deg, var(--teal), var(--cyan), var(--purple));
+        -webkit-background-clip: text; background-clip: text; color: transparent;
+      }
+      h1 {
+        font-size: clamp(34px, 11vw, 50px); line-height: 1.12; margin: 0 0 16px;
+        font-weight: 800;
+        background: linear-gradient(100deg, var(--teal) 0%, var(--cyan) 45%, var(--purple) 100%);
+        -webkit-background-clip: text; background-clip: text; color: transparent;
+        filter: drop-shadow(0 0 26px rgba(94, 200, 255, 0.4));
+      }
+      .tagline {
+        font-size: clamp(16px, 4.4vw, 18px); color: var(--muted);
+        margin: 0 auto; max-width: 560px;
+      }
+      .tagline strong { color: var(--fg); }
+      .steps {
+        display: flex; gap: 8px; justify-content: center; margin: 30px 0 6px;
+        flex-wrap: wrap;
+      }
+      .steps span {
+        width: 16px; height: 16px; border-radius: 50%;
+        background: var(--line); display: inline-block;
+        animation: seq 2.4s steps(1) infinite;
+      }
+      .steps span:nth-child(1) { animation-delay: 0s; }
+      .steps span:nth-child(2) { animation-delay: 0.3s; }
+      .steps span:nth-child(3) { animation-delay: 0.6s; }
+      .steps span:nth-child(4) { animation-delay: 0.9s; }
+      .steps span:nth-child(5) { animation-delay: 1.2s; }
+      .steps span:nth-child(6) { animation-delay: 1.5s; }
+      .steps span:nth-child(7) { animation-delay: 1.8s; }
+      .steps span:nth-child(8) { animation-delay: 2.1s; }
+      @keyframes seq {
+        0%, 12.5% { background: var(--cyan); box-shadow: 0 0 16px var(--cyan); }
+        12.5%, 100% { background: var(--line); box-shadow: none; }
+      }
+      .downloads {
+        display: flex; flex-direction: column; gap: 14px; align-items: stretch;
+        margin: 34px 0 8px;
+      }
+      .btn {
+        display: inline-flex; flex-direction: column; align-items: center;
+        width: 100%; padding: 16px 28px; border-radius: 14px;
+        background: linear-gradient(120deg, var(--cyan), var(--purple));
+        color: #071019; text-decoration: none; font-weight: 700; font-size: 17px;
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        box-shadow: 0 0 24px rgba(94, 200, 255, 0.32);
+      }
+      .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 0 36px rgba(94, 200, 255, 0.5), 0 0 60px rgba(155, 123, 255, 0.36);
+      }
+      .btn small { font-weight: 600; font-size: 12px; opacity: 0.78; margin-top: 2px; }
+      .sub-links { text-align: center; margin: 14px 0 0; font-size: 14px; }
+      .sub-links a { color: var(--muted); text-decoration: none; }
+      .sub-links a:hover { color: var(--cyan); }
+      section { padding: 40px 0; border-top: 1px solid var(--line); }
+      h2 {
+        font-size: 22px; margin: 0 0 16px;
+        background: linear-gradient(90deg, var(--cyan), var(--teal));
+        -webkit-background-clip: text; background-clip: text; color: transparent;
+      }
+      p { color: var(--fg); }
+      p strong { color: var(--teal); }
+      .muted { color: var(--muted); }
+      .install {
+        background: var(--panel); border-radius: 14px; padding: 20px 24px;
+        border: 1px solid var(--line);
+        backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+      }
+      .install h3 { margin: 0 0 8px; font-size: 16px; color: var(--cyan); }
+      .install + .install { margin-top: 16px; }
+      code {
+        background: rgba(7, 16, 25, 0.85); padding: 2px 7px; border-radius: 6px;
+        border: 1px solid rgba(94, 200, 255, 0.2); color: var(--cyan);
+        font-family: "SF Mono", ui-monospace, Menlo, Consolas, monospace; font-size: 13px;
+      }
+      footer {
+        text-align: center; padding: 48px 0 64px; color: var(--muted);
+        font-size: 13px; border-top: 1px solid var(--line);
+      }
+      a:focus-visible, .btn:focus-visible {
+        outline: 2px solid var(--cyan); outline-offset: 3px; border-radius: 6px;
+      }
+      @media (min-width: 560px) {
+        .wrap { padding: 0 24px; }
+        header { padding: 80px 0 48px; }
+        .downloads { flex-direction: row; flex-wrap: wrap; justify-content: center; }
+        .btn { width: auto; min-width: 220px; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <p class="logo">KOTA2</p>
+        <h1>Better Pill</h1>
+        <p class="tagline">
+          テンポに同期して動く <strong>8 ステップの Wah シーケンサー</strong>。<br />
+          STEPS 4/6/8・DAW シンク / タップテンポ・Forward / Random。
+        </p>
+        <div class="steps" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span>
+        </div>
+
+        <div class="downloads">
+          <a
+            class="btn"
+            href="https://github.com/KOTA2-STUDIO/Better-Pill-releases/releases/latest/download/Better-Pill-macOS.dmg"
+          >
+            macOS をダウンロード
+            <small>AU / VST3 ・ .dmg（.pkg インストーラ同梱）</small>
+          </a>
+          <a
+            class="btn"
+            href="https://github.com/KOTA2-STUDIO/Better-Pill-releases/releases/latest/download/Better-Pill-Windows-VST3.zip"
+          >
+            Windows をダウンロード
+            <small>VST3 ・ ZIP（手動コピー）</small>
+          </a>
+        </div>
+        <p class="sub-links">
+          <a href="https://github.com/KOTA2-STUDIO/Better-Pill-releases/releases/latest"
+            >すべてのファイル・リリースノートを見る →</a
+          >
+        </p>
+      </header>
+
+      <section>
+        <h2>これは何？</h2>
+        <p>
+          <strong>Better Pill</strong> は、8 個のステップに設定した Wah
+          位置（周波数）を、テンポに同期して順に切り替えるステップシーケンサー型の Wah です。
+          <strong>STEPS</strong> で 4 / 6 / 8 ステップ、<strong>SYNC</strong> で DAW
+          テンポシンク / タップテンポ、<strong>ORDER</strong> で Forward / Random を選べます。
+          <strong>RATE / RESONANCE / RANGE / GLIDE / MIX</strong> で質感を追い込めます。
+        </p>
+      </section>
+
+      <section>
+        <h2>インストール</h2>
+        <div class="install">
+          <h3>macOS</h3>
+          <p class="muted">
+            ダウンロードした <code>.dmg</code> を開き、中の <code>.pkg</code>
+            を実行すると、Audio Unit（Logic / GarageBand 用）と VST3（その他の DAW 用）が
+            インストールされます。完了後、DAW でプラグインを再スキャンしてください。
+          </p>
+        </div>
+        <div class="install">
+          <h3>Windows</h3>
+          <p class="muted">
+            ZIP を解凍し、<code>Better Pill.vst3</code> フォルダを
+            <code>C:\Program Files\Common Files\VST3\</code>
+            にコピーしてください（管理者権限が必要）。完了後、DAW で再スキャンします。
+          </p>
+        </div>
+      </section>
+
+      <section>
+        <h2>動作環境</h2>
+        <p class="muted">
+          macOS（Universal: Apple Silicon / Intel）・Windows 10 / 11 (64-bit)。<br />
+          AU または VST3 対応の DAW。mono / stereo 対応。
+        </p>
+      </section>
+
+      <footer>
+        © KOTA2 — Better Pill<br />
+        JUCE および Steinberg VST3 SDK を各ライセンスのもとで使用しています。<br />
+        VST is a trademark of Steinberg Media Technologies GmbH.
+      </footer>
+    </div>
+
+    <script>
+      (function () {
+        var canvas = document.getElementById("pulse");
+        if (!canvas) return;
+        canvas.remove(); // reserved for future motion; static gradient for now
+      })();
+    </script>
+  </body>
+</html>
