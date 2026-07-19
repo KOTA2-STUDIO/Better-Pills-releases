@@ -7,7 +7,7 @@
     <title>Better Pills — 8ステップ Wah シーケンサー</title>
     <meta
       name="description"
-      content="Better Pills は、テンポに同期して動く 8 ステップの Wah シーケンサー。STEPS 4/6/8・DAW シンク/タップテンポ・Forward/Random。macOS (AU/VST3) と Windows (VST3) に対応。"
+      content="Better Pills は、テンポに同期して動く 8 ステップの Wah シーケンサー。STEPS 4/6/8・DAW シンク/手動 TIME・Forward/Random。macOS (AU/VST3) と Windows (VST3) に対応。"
     />
     <meta property="og:site_name" content="KOTA2" />
     <meta property="og:title" content="Better Pills — 8ステップ Wah シーケンサー" />
@@ -97,6 +97,12 @@
         0%, 12.5% { background: var(--cyan); box-shadow: 0 0 16px var(--cyan); }
         12.5%, 100% { background: var(--line); box-shadow: none; }
       }
+      /* Artwork sits above the step-circle row (scales with the viewport). */
+      .hero-art {
+        display: block; width: min(400px, 82vw); height: auto;
+        margin: 30px auto 0;
+        filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.45));
+      }
       .downloads {
         display: flex; flex-direction: column; gap: 14px; align-items: stretch;
         margin: 34px 0 8px;
@@ -143,6 +149,8 @@
         text-align: center; padding: 48px 0 64px; color: var(--muted);
         font-size: 13px; border-top: 1px solid var(--line);
       }
+      footer a { color: var(--cyan); text-decoration: none; }
+      footer a:hover { color: var(--teal); }
       a:focus-visible, .btn:focus-visible {
         outline: 2px solid var(--cyan); outline-offset: 3px; border-radius: 6px;
       }
@@ -161,8 +169,15 @@
         <h1>Better Pills</h1>
         <p class="tagline">
           テンポに同期して動く <strong>8 ステップの Wah シーケンサー</strong>。<br />
-          STEPS 4/6/8・DAW シンク / タップテンポ・Forward / Random。
+          STEPS 4/6/8・DAW シンク / 手動 TIME・Forward / Random。
         </p>
+        <img
+          class="hero-art"
+          src="better-pills.png"
+          alt="Better Pills"
+          width="400"
+          height="198"
+        />
         <div class="steps" aria-hidden="true">
           <span></span><span></span><span></span><span></span>
           <span></span><span></span><span></span><span></span>
@@ -197,7 +212,7 @@
           <strong>Better Pills</strong> は、8 個のステップに設定した Wah
           位置（周波数）を、テンポに同期して順に切り替えるステップシーケンサー型の Wah です。
           <strong>STEPS</strong> で 4 / 6 / 8 ステップ、<strong>SYNC</strong> で DAW
-          テンポシンク / タップテンポ、<strong>ORDER</strong> で Forward / Random を選べます。
+          テンポシンク / 手動 TIME（ms）、<strong>ORDER</strong> で Forward / Random を選べます。
           <strong>RATE / RESONANCE / RANGE / GLIDE / MIX</strong> で質感を追い込めます。
         </p>
       </section>
